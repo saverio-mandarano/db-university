@@ -26,6 +26,13 @@ nome
 
 6. Selezionare tutti i docenti che insegnano nel Dipartimento di
 Matematica (54)
+SELECT DISTINCT `teachers`.*, `departments`.`name` AS `department_name`
+FROM `teachers`
+JOIN `course_teacher` ON `teachers`.`id` = `course_teacher`.`teacher_id`
+JOIN `courses` ON `course_teacher`.`course_id` = `courses`.`id` 
+JOIN `degrees` ON `courses`.`degree_id` = `degrees`.`id`
+JOIN `departments` ON `degrees`.`department_id` = `departments`.`id`
+WHERE `departments`.`name` = 'Dipartimento di Matematica';
 
 7. BONUS: Selezionare per ogni studente il numero di tentativi sostenuti
 per ogni esame, stampando anche il voto massimo. Successivamente,
@@ -51,3 +58,16 @@ SELECT `courses`.name, `courses`.`description`, `courses`.`cfu`, `exams`.`date`,
 FROM `courses`
 JOIN  `exams` ON `courses`.`id` = `exams`.`course_id`
 WHERE `courses`.`id` = 144 
+
+-- Selezionare a quale dipartimento appartiene il Corso di Laurea in Diritto dell'Economia (Dipartimento di Scienze politiche, giuridiche e studi internazionali)
+SELECT `degrees`.`name` AS `degree_name`, `departments`.`name` AS `department_name`, `departments`.`address`, `departments`.`phone`, `departments`.`email`, `departments`.`website`, `departments`.`head_of_department`
+FROM `departments`
+JOIN  `degrees` ON `departments`.`id` = `degrees`.`department_id`
+WHERE `degrees`.`name` = 'Corso di Laurea in Diritto dell\'Economia'
+
+-- Selezionare tutti gli appelli d'esame del Corso di Laurea Magistrale in Fisica del primo anno
+SELECT `exams`.`date` AS `exams_date`, `exams`.`hour`, `exams`.`location`, `exams`.`address`, `courses`.`name` AS `courses_name`, `degrees`.`name` AS `degree_name`, `courses`.`year`
+FROM `courses`
+JOIN  `exams` ON `courses`.`id` = `exams`.`course_id`
+JOIN  `degrees` ON `degrees`.`id` = `courses`.`degree_id`
+WHERE `degrees`.`name` = 'Corso di Laurea Magistrale in Fisica' AND `courses`.`year`= 1
