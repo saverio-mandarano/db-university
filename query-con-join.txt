@@ -12,6 +12,11 @@ JOIN  `departments` ON `degrees`.`department_id` = `departments`.`id`
 WHERE `degrees`.`name` LIKE '%Magistrale%' AND `departments`.`name` LIKE '%Neuroscienze'
 
 3. Selezionare tutti i corsi in cui insegna Fulvio Amato (id=44)
+SELECT `courses`.`name` AS `course_name`, `courses`.`description` AS `course_description`, `courses`.`cfu`, `teachers`.`name` AS `teacher_name`, `teachers`.`surname` AS `teacher_surname`
+FROM `courses`
+JOIN  `course_teacher` ON `courses`.`id` = `course_teacher`.`course_id`
+JOIN `teachers` ON `course_teacher`.`teacher_id` = `teachers`.`id`
+WHERE `course_teacher`.`teacher_id` = 44 
 
 4. Selezionare tutti gli studenti con i dati relativi al corso di laurea a cui
 sono iscritti e il relativo dipartimento, in ordine alfabetico per cognome e
@@ -40,3 +45,9 @@ SELECT `courses`.*
 FROM `courses`
 JOIN  `degrees` ON `courses`.`degree_id` = `degrees`.`id`
 WHERE `degrees`.`name` = 'Corso di Laurea in Informatica'
+
+-- Selezionare le informazioni sul corso con id = 144, con tutti i relativi appelli d'esame
+SELECT `courses`.name, `courses`.`description`, `courses`.`cfu`, `exams`.`date`, `exams`.`hour`, `exams`.`location`, `exams`.`address`
+FROM `courses`
+JOIN  `exams` ON `courses`.`id` = `exams`.`course_id`
+WHERE `courses`.`id` = 144 
