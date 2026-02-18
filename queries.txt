@@ -1,9 +1,23 @@
 Query con GROUP BY:
 1. Contare quanti iscritti ci sono stati ogni anno
-2. Contare gli insegnanti che hanno l'ufficio nello stesso edificio
-3. Calcolare la media dei voti di ogni appello d'esame
-4. Contare quanti corsi di laurea ci sono per ogni dipartimento
+SELECT COUNT(*) AS `total_subscription`, YEAR(`enrolment_date`) AS `enrolment_yaer`
+FROM `students`
+GROUP BY `enrolment_yaer`;
 
+2. Contare gli insegnanti che hanno l'ufficio nello stesso edificio
+SELECT COUNT(*) AS `total_teachers_same_building`,`office_address`
+FROM `teachers`
+GROUP BY `office_address`;
+
+3. Calcolare la media dei voti di ogni appello d'esame
+SELECT AVG(`vote`) AS `average_vote`, `exam_id`
+FROM `exam_student`
+GROUP BY `exam_id`;
+
+4. Contare quanti corsi di laurea ci sono per ogni dipartimento
+SELECT COUNT(*) AS `total_courses_by_departments`, `department_id`
+FROM `degrees`
+GROUP BY `department_id`;
 
 
 
@@ -97,3 +111,13 @@ FROM `students`;
 -- Qual'è il numero totale degli studenti iscritti? (5000)
 SELECT COUNT(`id`) AS `totale_iscritti`
 FROM `students`;
+
+-- Contare i corsi raggruppati per cfu
+SELECT COUNT(*) AS `totale_corsi`, `cfu`
+FROM `courses`
+GROUP BY `cfu`;
+
+-- Contare gli studenti raggruppati per anno di nascita
+SELECT COUNT(*) AS `totale_studenti`, YEAR(`date_of_birth`) AS `anno_nascita`
+FROM `students`
+GROUP BY `anno_nascita`;
